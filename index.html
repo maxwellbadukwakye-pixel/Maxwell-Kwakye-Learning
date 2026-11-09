@@ -47,11 +47,51 @@ function toggle(k){done.has(k)?done.delete(k):done.add(k);localStorage.setItem('
 function filter(id,q){document.querySelectorAll('#'+id+' .lesson').forEach(x=>x.style.display=x.dataset.search.includes(q.toLowerCase())?'flex':'none')}
 function update(){let e=[...done].filter(x=>x.startsWith('excel-')).length,w=[...done].filter(x=>x.startsWith('web-')).length,t=e+w,ep=Math.round(e/12*100),wp=Math.round(w/12*100);[['totalStat',t],['pTotal',t],['pExcel',e],['pWeb',w],['pAvailable',24],['streak',t?'Keep going':'0 days']].forEach(([id,v])=>document.getElementById(id).textContent=v);[['epbar',ep],['wpbar',wp],['pebar',ep],['pwbar',wp]].forEach(([id,v])=>document.getElementById(id).style.width=v+'%');document.getElementById('epct').textContent=ep+'% completed';document.getElementById('wpct').textContent=wp+'% completed';document.getElementById('petxt').textContent=ep+'% completed ('+e+'/12)';document.getElementById('pwtxt').textContent=wp+'% completed ('+w+'/12)'}
 function reset(){if(confirm('Reset completed lessons on this device?')){done.clear();localStorage.removeItem('mtaDone');render('excel','excelList');render('web','webList');update()}}
-function search(q){if(q.trim())window.open('https://www.perplexity.ai/search?q='+encodeURIComponent(q+' explain step by step with examples'),'_blank','noopener')}
+function search(q){
+ q=(q||"").trim();if(!q)return;
+ const words=q.toLowerCase().split(/\s+/).filter(w=>w.length>1);
+ const found=[];
+ ["excel","web"].forEach(type=>data[type].forEach(l=>{
+  const hay=l.join(" ").toLowerCase();
+  const score=words.reduce((n,w)=>n+(hay.includes(w)?1:0),0);
+  if(score)found.push({title:l[0],description:l[1],type,score});
+ }));
+ const guides=[
+  {title:"Learn Microsoft Excel Step by Step",description:"Cells, formulas, functions, tables and charts.",url:"/excel-learning.html",terms:"excel spreadsheet formulas functions charts tables pivot"},
+  {title:"Web Development for Beginners",description:"HTML, CSS, JavaScript and website projects.",url:"/web-development.html",terms:"web development html css javascript coding website"},
+  {title:"AI Learning Tools for Students",description:"Use AI for research, study and coding practice.",url:"/ai-learning-tools.html",terms:"ai artificial intelligence search study research"}
+ ];
+ guides.forEach(g=>{const score=words.reduce((n,w)=>n+(g.terms.includes(w)?1:0),0);if(score)found.push({...g,score})});
+ found.sort((a,b)=>b.score-a.score);
+ const results=found.slice(0,6);
+ const voiceResults=document.getElementById("voiceResults");
+ if(voiceResults)voiceResults.innerHTML="";
+ if(!results.length){
+  const msg="No matching lesson was found on Maxwell Learning Code yet. Try Excel, formulas, charts, HTML, CSS, JavaScript or AI tools.";
+  if(document.getElementById("assistant").classList.contains("active"))bubble(msg);
+  if(voiceResults)voiceResults.textContent=msg;
+  return [];
+ }
+ if(document.getElementById("assistant").classList.contains("active"))bubble("I searched this website for: "+q+". Here are the closest matches:");
+ results.forEach(r=>{
+  if(document.getElementById("assistant").classList.contains("active"))bubble(r.title+" — "+r.description);
+  if(voiceResults){
+   const item=document.createElement("article");item.className="lesson";
+   const detail=document.createElement("div");detail.className="detail";
+   const title=document.createElement("b");title.textContent=r.title;
+   const desc=document.createElement("small");desc.textContent=r.description;
+   detail.append(title,desc);item.append(detail);
+   if(r.url){const a=document.createElement("a");a.className="link";a.href=r.url;a.textContent="Open guide";item.append(a)}
+   else{const b=document.createElement("button");b.className="btn sm";b.textContent="Open lessons";b.onclick=()=>show(r.type);item.append(b)}
+   voiceResults.append(item);
+  }
+ });
+ return results;
+}
 function videos(q){window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank','noopener')}
 function bubble(t,u=false){let d=document.createElement('div');d.className='bubble'+(u?' user':'');d.textContent=t;document.getElementById('messages').appendChild(d);d.scrollIntoView({behavior:'smooth',block:'nearest'})}
-document.getElementById('chatForm').onsubmit=e=>{e.preventDefault();let q=document.getElementById('chatInput').value.trim();if(!q)return;bubble(q,true);document.getElementById('chatInput').value='';bubble('I can help you explore that topic. I am opening a web search for learning explanations and tutorials. A direct AI-generated answer needs a secure AI service connection.');search(q)};
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,active=false;if(SR){rec=new SR();rec.lang='en-GH';rec.onresult=e=>{let q=e.results[0][0].transcript;document.getElementById('voiceText').textContent='You said: '+q;document.getElementById('voiceText').dataset.q=q;document.getElementById('voiceStatus').textContent='Your question is ready'};rec.onerror=()=>document.getElementById('voiceStatus').textContent='Microphone unavailable. Check browser permission.';rec.onend=()=>{active=false;document.getElementById('mic').classList.remove('on')}}
+document.getElementById('chatForm').onsubmit=e=>{e.preventDefault();let q=document.getElementById('chatInput').value.trim();if(!q)return;bubble(q,true);document.getElementById('chatInput').value='';search(q)};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,active=false;if(SR){rec=new SR();rec.lang='en-GH';rec.onresult=e=>{let q=e.results[0][0].transcript;document.getElementById('voiceText').textContent='You said: '+q;document.getElementById('voiceText').dataset.q=q;document.getElementById('voiceStatus').textContent='Searching Maxwell Learning Code...';search(q);document.getElementById('voiceStatus').textContent='Your results are shown below'};rec.onerror=()=>document.getElementById('voiceStatus').textContent='Microphone unavailable. Check browser permission.';rec.onend=()=>{active=false;document.getElementById('mic').classList.remove('on')}}
 function speak(){const t=document.getElementById('voiceText').dataset.q||'Welcome to Maxwell Tech Academy. Choose an Excel or web development lesson and learn one step at a time.';if(!('speechSynthesis' in window)){document.getElementById('voiceStatus').textContent='Speech output is not supported in this browser.';return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GH';speechSynthesis.speak(u);document.getElementById('voiceStatus').textContent='Reading aloud...'}
 function listen(){if(!rec){document.getElementById('voiceStatus').textContent='Voice recognition is not supported. Try Chrome or Edge.';return}try{if(active){rec.stop();active=false;return}active=true;document.getElementById('mic').classList.add('on');document.getElementById('voiceStatus').textContent='Listening... speak now';rec.start()}catch(e){document.getElementById('voiceStatus').textContent='Please try again and allow microphone access.'}}
 const topics=[['Excel for beginners','▦','excel full course for beginners'],['Excel formulas and functions','ƒx','Excel formulas functions tutorial'],['Excel charts and PivotTables','▥','Excel charts PivotTables tutorial'],['HTML and CSS full course','⌘','HTML CSS full course for beginners'],['JavaScript for beginners','JS','JavaScript full course beginners'],['Build a website project','⚡','HTML CSS JavaScript website project tutorial']];
