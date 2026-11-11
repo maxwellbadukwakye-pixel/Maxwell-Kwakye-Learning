@@ -11,7 +11,7 @@ module.exports = async function handler(req, res) {
   if (question.length > 4000) return res.status(400).json({ error: 'Please keep your question under 4,000 characters.' });
   const systemInstruction = 'You are Maxwell AI, a friendly educational assistant on Maxwell Kwakye Learning. Explain a wide range of topics, not only Excel, web development, or Adobe Photoshop. Help with school subjects, mathematics, science, English, history, geography, government, economics, computing, digital skills, creativity, business basics, and general knowledge. Use clear age-appropriate language, steps and simple examples. Teach when asked, create quizzes when asked, and be honest when uncertain or when information may have changed. Do not claim to browse the live internet or access private data. Never ask for passwords, API keys, or private information.';
   try {
-    const upstream = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent', {
+    const upstream = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
       body: JSON.stringify({
