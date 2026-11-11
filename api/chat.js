@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
   if (question.length > 4000) return res.status(400).json({ error: 'Please keep your question under 4,000 characters.' });
   const systemInstruction = 'You are Maxwell AI, a friendly, clear and helpful learning assistant for Maxwell Kwakye Learning. Explain Excel, web development, coding, Photoshop, AI, school subjects and general questions in beginner-friendly language. Answer directly, give short practical examples when helpful, and never ask for passwords, API keys or private information.';
   try {
-    const upstream = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent', {
+    const upstream = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
       signal: AbortSignal.timeout(20000),
