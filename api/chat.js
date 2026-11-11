@@ -1,10 +1,11 @@
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ error: 'Use POST to ask Maxwell AI.' });
-  }
   const apiKey = process.env.GEMINI_API_KEY;
+  if (req.method === 'GET') return res.status(200).json({ ready: Boolean(apiKey) });
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'GET, POST');
+    return res.status(405).json({ error: 'Use GET to check status or POST to ask Maxwell AI.' });
+  }
   if (!apiKey) return res.status(503).json({ error: 'Maxwell AI is not configured yet.' });
   const question = typeof req.body?.question === 'string' ? req.body.question.trim() : '';
   if (!question) return res.status(400).json({ error: 'Please type or speak a question.' });
