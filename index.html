@@ -89,10 +89,51 @@ body.light .mic{background:radial-gradient(circle,#c6e2ff,#e7f3ff);color:#214b70
 @media(max-width:700px){.side{position:sticky;left:auto;width:100%;min-height:unset;display:block;padding:12px}.side .brand{margin:0 0 8px}.side .nav{overflow-x:auto;gap:3px;padding-bottom:3px}.side .nav button{padding:9px 10px;font-size:12px}.main{padding:14px}.side .nav button[data-view="web"]{display:none}}
 body.light .side{background:#dcecffed}
 body.light .theme-toggle{background:#f4f9ff;color:#214b70;border-color:#b6d2ec}
+
+/* Screenshot-matched Maxwell Kwakye Learning landing design */
+:root{--gold:#ffc928}
+body{background:#071326;color:#f5f7ff;font-family:Inter,system-ui,Arial,sans-serif}
+.side{min-height:72px;height:72px;padding:10px clamp(20px,6.8vw,72px);background:#061326;border-bottom:1px solid #26364c;box-shadow:none}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#f4f6fb;margin:0 auto 0 0}
+.brand-logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(145deg,#ffdb55,#f5a900);color:#071326;display:grid;place-items:center;font-size:26px;font-weight:950;border:2px solid #fff2b5;box-shadow:0 3px 14px #0005}
+.brand-copy{display:flex;flex-direction:column;gap:1px;letter-spacing:1px;font-size:11px;line-height:1.35}
+.brand-copy small{font-size:10px;color:#ffc928;font-weight:900;letter-spacing:2px}
+.side .nav{justify-content:flex-end;gap:clamp(8px,2vw,24px)}
+.side .nav button,.side .nav-link{background:transparent;border:0;color:#c8d0df;padding:10px 3px;border-radius:0;text-decoration:none;font-size:13px;font-weight:550;white-space:nowrap;cursor:pointer}
+.side .nav button:hover,.side .nav-link:hover{color:#ffc928;background:transparent}
+.side .nav button.active{color:#fff;box-shadow:inset 0 -2px #ffc928;background:transparent}
+.side .nav .theme-toggle{border:1px solid #33445e;border-radius:9px;padding:8px 12px;color:#f7f8fc}
+.main{max-width:none;padding:20px clamp(10px,1vw,18px) 48px}
+.top{display:none}
+.hero{min-height:440px;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:35px;padding:clamp(36px,5.8vw,56px);border:1px solid #203b60;border-radius:28px;background:radial-gradient(ellipse at 75% 20%,#1c3b67 0%,transparent 42%),linear-gradient(110deg,#0d2342,#142f55);box-shadow:none;overflow:hidden}
+.hero .eyebrow{color:#ffc928;font-size:10px;letter-spacing:2.5px;font-weight:900}
+.hero h1{font-size:clamp(42px,6vw,70px);line-height:1.08;letter-spacing:-2.8px;margin:22px 0 18px;color:#f6f7fb;font-weight:850}
+.hero h1 span{color:#ffc928}
+.hero p{font-size:16px;line-height:1.8;color:#c7d6ee;max-width:570px}
+.hero img{height:310px;min-height:270px;border:0;border-radius:20px;object-position:center 24%;box-shadow:none}
+.hero .btn{background:#ffc928;color:#09172b;border-radius:9px;padding:12px 19px}
+.hero .btn.alt{background:#172b48;border:1px solid #344b69;color:#f2f5fb}
+.eyebrow{color:#ffc928}
+.head h2{color:#f4f6fb}
+.card,.stat{background:#0e1d33;border-color:#243a58}
+.sub,.body p{color:#b8c9df}
+.nav-link{display:inline-flex;align-items:center}
+@media(max-width:760px){.side{height:auto;min-height:72px;display:flex;align-items:center;flex-wrap:wrap;padding:10px 15px}.side .brand{margin:0 auto 8px 0}.side .nav{width:100%;overflow-x:auto;justify-content:flex-start;gap:18px}.side .nav button,.side .nav-link{font-size:12px}.hero{grid-template-columns:1fr;min-height:unset;padding:30px 24px}.hero h1{font-size:clamp(39px,10vw,55px)}.hero img{height:230px;min-height:210px}.main{padding:12px 9px 35px}}
+body.light{background:#e8f3ff;color:#18324f}
+body.light .side{background:#e7f2ff;border-bottom-color:#c6dcf1}
+body.light .brand{color:#18324f}
+body.light .side .nav button,body.light .side .nav-link{color:#45627f}
+body.light .side .nav button.active{color:#173b60}
+body.light .hero{background:radial-gradient(ellipse at 75% 20%,#c3ddfb 0%,transparent 42%),linear-gradient(110deg,#dceeff,#c6e1ff);border-color:#a9ccef}
+body.light .hero h1{color:#18324f}
+body.light .hero h1 span{color:#d99a00}
+body.light .hero p{color:#496783}
+body.light .card,body.light .stat{background:#f7fbff;border-color:#c6dcf1}
+body.light .head h2{color:#18324f}
 </style></head><body><div class="overlay" id="overlay" onclick="menu()"></div><div class="app">
-<aside class="side" id="side"><div class="brand"><div class="mark">M</div>MAXWELL <span style="color:#79dcd7">LEARNING</span></div><nav class="nav"><button class="active" data-view="home">Home</button><button data-view="excel">Courses</button><button data-view="assistant">Maxwell AI</button><button data-view="web">Web Development</button><button type="button" onclick="document.getElementById('aboutSection').scrollIntoView({behavior:'smooth'})">About</button><button type="button" onclick="document.getElementById('contactSection').scrollIntoView({behavior:'smooth'})">Contact</button><button class="theme-toggle" type="button" onclick="toggleTheme()">☀ Light mode</button></nav></aside>
+<aside class="side" id="side"><a class="brand" href="#" onclick="show('home');return false"><span class="brand-logo">K</span><span class="brand-copy"><b>MAXWELL KWAKYE</b><small>LEARNING</small></span></a><nav class="nav"><button class="active" data-view="home">Learn</button><button data-view="videos">Videos</button><button data-view="assistant">Maxwell AI</button><button data-view="voice">AI Voice</button><a class="nav-link" href="#contactSection">Contact</a><button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light and dark mode">☼</button></nav></aside>
 <main class="main"><header class="top"><div><button class="menu" onclick="menu()">☰</button> &nbsp; Learning workspace / <b id="crumb">Dashboard</b></div><span class="pill">✦ KEEP LEARNING</span></header>
-<section class="view active" id="home"><div class="hero"><div><div class="eyebrow">KWAKYE TECH · YOUR JOURNEY STARTS HERE</div><h1>Learn today.<br><span>Build tomorrow.</span></h1><p>Grow your digital skills with practical Excel lessons, web development projects, helpful AI tools and guided learning.</p><button class="btn" onclick="show('excel')">Explore courses →</button> <button class="btn alt" onclick="show('assistant')">Ask AI</button></div><img class="profile-photo" alt="Maxwell in a professional suit"></div>
+<section class="view active" id="home"><div class="hero"><div><div class="eyebrow">● &nbsp; YOUR NEXT SKILL STARTS HERE</div><h1>Learn today.<br><span>Build your future.</span></h1><p>Practical, beginner-friendly lessons to help you learn Excel, create for the web, and edit images with Adobe Photoshop.</p><button class="btn" onclick="show('excel')">Explore courses →</button> <button class="btn alt" onclick="show('assistant')">Ask AI</button></div><img class="profile-photo" alt="Maxwell in a professional suit"></div>
 <div class="card" style="margin:18px 0;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,.7fr);gap:16px;align-items:center"><div><div class="eyebrow">YOUR LEARNING SPACE</div><h2 style="margin:8px 0">Max Kwa learning inspiration</h2><p class="sub">Your shared design is now part of this learning hub. Explore Excel, coding and AI tools from one place.</p></div><img id="portalPreview" alt="Max Kwa Ghana learning portal design" style="width:100%;max-height:180px;object-fit:cover;object-position:top;border-radius:12px;border:1px solid #344b72"></div><div class="stats"><div class="stat"><small>Learning paths</small><strong>02</strong><small>Excel + Web Development</small></div><div class="stat"><small>Lessons completed</small><strong id="totalStat">0</strong><small>Keep your momentum</small></div><div class="stat"><small>Study streak</small><strong id="streak">0 days</strong><small>Build a daily habit</small></div><div class="stat"><small>Your goal</small><strong>Grow</strong><small>One lesson at a time</small></div></div>
 <div class="head"><div><h2>Your learning paths</h2><p>Choose a course and start practising.</p></div></div><div class="courses">
 <article class="card course"><div class="art">▦ <span class="pill">BEGINNER → ADVANCED</span></div><div class="body"><h3>Microsoft Excel</h3><p>Spreadsheets, formulas, functions, charts, tables and data analysis.</p><div class="bar"><i id="epbar" style="width:0%"></i></div><div class="foot"><span id="epct">0% completed</span><a class="link" onclick="show('excel')">Continue →</a></div></div></article>
@@ -112,8 +153,8 @@ const data={excel:[['Getting started with Excel','Understand workbooks, workshee
 const done=new Set(JSON.parse(localStorage.getItem('mtaDone')||'[]'));
 function toggleTheme(){document.body.classList.toggle('light');const b=document.querySelector('.theme-toggle');if(b)b.textContent=document.body.classList.contains('light')?'🌙 Dark mode':'☀ Light mode';localStorage.setItem('mkwTheme',document.body.classList.contains('light')?'light':'dark')}
 if(localStorage.getItem('mkwTheme')==='light'){document.body.classList.add('light')}
-function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));document.getElementById('crumb').textContent=({home:'Home',excel:'Courses',web:'Web Development',videos:'Video Library',assistant:'Maxwell AI',voice:'Voice AI',progress:'My Progress'})[id];menu(true);scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('.nav button').forEach(b=>{b.dataset.view=b.dataset.view||b.getAttribute('data-view');b.onclick=()=>show(b.dataset.view)});function menu(close=false){let s=document.getElementById('side'),o=document.getElementById('overlay');if(close){s.classList.remove('open');o.classList.remove('show')}else{s.classList.toggle('open');o.classList.toggle('show')}}
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));document.getElementById('crumb').textContent=({home:'Home',excel:'Courses',web:'Web Development',videos:'Video Library',assistant:'Maxwell AI',voice:'Voice AI',progress:'My Progress'})[id];menu(true);scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.nav [data-view]').forEach(b=>{b.onclick=()=>show(b.dataset.view)});function menu(close=false){let s=document.getElementById('side'),o=document.getElementById('overlay');if(close){s.classList.remove('open');o.classList.remove('show')}else{s.classList.toggle('open');o.classList.toggle('show')}}
 function render(type,id){document.getElementById(id).innerHTML=data[type].map((l,i)=>{let k=type+'-'+i,d=done.has(k);return '<article class="lesson" data-search="'+(l[0]+' '+l[1]).toLowerCase()+'"><span class="play">'+(d?'✓':'▶')+'</span><div class="detail"><b>'+l[0]+'</b><small>'+l[1]+'</small></div><button class="btn sm '+(d?'alt':'')+'" onclick="toggle(\''+k+'\')">'+(d?'Completed ✓':'Mark done')+'</button><a class="link" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+encodeURIComponent(l[2])+'">Watch ↗</a></article>'}).join('')}
 function toggle(k){done.has(k)?done.delete(k):done.add(k);localStorage.setItem('mtaDone',JSON.stringify([...done]));render('excel','excelList');render('web','webList');update()}
 function filter(id,q){document.querySelectorAll('#'+id+' .lesson').forEach(x=>x.style.display=x.dataset.search.includes(q.toLowerCase())?'flex':'none')}
