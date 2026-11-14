@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "Kwakye Tech",
+  "short_name": "Kwakye Tech",
+  "description": "Learn Excel, web development, and Adobe Photoshop with Kwakye Tech.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f8ff",
+  "theme_color": "#f5f8ff",
+  "icons": [
+    { "src": "/kwakye-tech-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/kwakye-tech-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

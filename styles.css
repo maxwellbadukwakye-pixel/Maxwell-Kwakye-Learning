@@ -24,3 +24,6 @@
 .chat-compose{height:62px}
 @media(max-width:900px){.ai-inner{grid-template-columns:minmax(210px,.68fr) minmax(0,1.32fr);gap:24px;padding:68px 28px;min-height:660px}.chat-messages{height:390px}}
 @media(max-width:660px){.ai-inner{grid-template-columns:1fr;gap:24px;padding:64px 16px;min-height:0}.chat-messages{height:360px;padding:20px}.chat-head{height:66px}.message{font-size:13px;line-height:1.75}.chat-compose{height:58px;margin:0 10px}.chat-foot{font-size:10px}}
+.install-app{border:1px solid #dce3f3;background:var(--paper);color:var(--blue);border-radius:7px;padding:10px 12px;font-size:11px;font-weight:700;cursor:pointer}.install-app[hidden]{display:none}
+@media(max-width:660px){.install-app{padding:8px 9px;font-size:9px}}
+@media(max-width:390px){.login-button{font-size:0;padding:10px}.login-button::before{content:'Login';font-size:9px}.login-button span{display:none}}

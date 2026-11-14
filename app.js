@@ -1,4 +1,17 @@
 const $=(s,root=document)=>root.querySelector(s), $$=(s,root=document)=>[...root.querySelectorAll(s)];
+const installButton=$('#install-app');
+let installPrompt=null;
+if(installButton){
+  installButton.hidden=false;
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;installButton.textContent='Install app'});
+  installButton.addEventListener('click',async()=>{
+    if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;return}
+    const isApple=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    alert(isApple?'To install Kwakye Tech, tap Share, then Add to Home Screen.':'To install Kwakye Tech, open your browser menu and choose Install app or Add to Home screen.');
+  });
+  window.addEventListener('appinstalled',()=>{installButton.hidden=true});
+}
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
 $('#year').textContent=new Date().getFullYear();
 $('.theme-toggle').addEventListener('click',()=>{document.body.classList.toggle('dark');$('.theme-toggle').textContent=document.body.classList.contains('dark')?'☀':'☾';localStorage.setItem('kwakye-theme',document.body.classList.contains('dark')?'dark':'light')});
 if(localStorage.getItem('kwakye-theme')==='dark'){document.body.classList.add('dark');$('.theme-toggle').textContent='☀'}
