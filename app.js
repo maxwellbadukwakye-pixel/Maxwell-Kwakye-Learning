@@ -19,10 +19,23 @@ function preferredVoice(){
   const english=voices.filter(v=>/^en(-|_|$)/i.test(v.lang));
   return english.find(v=>/male|david|george|guy|mark|daniel|alex|ryan|james|matthew|aaron|fred/i.test(v.name))||english.find(v=>/google us english|english/i.test(v.name))||english[0]||voices[0]||null;
 }
+function speechFriendlyText(text){
+  return text
+    .replace(/```[\s\S]*?```/g,' I’ve put the code in the written reply. ')
+    .replace(/`([^`]+)`/g,'$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g,'$1')
+    .replace(/https?:\/\/\S+/g,'')
+    .replace(/^\s{0,3}#{1,6}\s/gm,'')
+    .replace(/^\s*[-*+]\s+/gm,'')
+    .replace(/[=+*#@^_~<>/\\{}\[\]$%|]/g,' ')
+    .replace(/\s+([,.;:!?])/g,'$1')
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
 function speak(text){
   if(!voiceReplies||!('speechSynthesis'in window))return;
   window.speechSynthesis.cancel();
-  const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=.96;utterance.pitch=.86;
+  const utterance=new SpeechSynthesisUtterance(speechFriendlyText(text));utterance.lang='en-US';utterance.rate=.96;utterance.pitch=.86;
   const voice=preferredVoice();if(voice)utterance.voice=voice;
   window.speechSynthesis.speak(utterance);
 }
