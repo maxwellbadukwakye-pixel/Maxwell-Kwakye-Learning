@@ -16,3 +16,11 @@
 .dark .chat-card{background:#fff;color:#1b2748}
 @media(max-width:900px){.ai-inner{grid-template-columns:minmax(230px,.8fr) minmax(0,1.2fr);gap:28px;padding:60px 32px}}
 @media(max-width:660px){.ai-inner{grid-template-columns:1fr;gap:24px;padding:58px 20px;min-height:0}.chat-messages{height:280px;padding:18px}.chat-head{height:62px}.message{font-size:12px}.chat-compose{height:54px;margin:0 10px;padding:5px}.chat-foot{font-size:9px;padding:10px 13px}}
+/* Further enlarge the Maxwell AI area for easier reading and longer chats. */
+.ai-inner{grid-template-columns:minmax(230px,.7fr) minmax(0,1.3fr);gap:36px;min-height:720px;padding:82px 58px}
+.chat-messages{height:440px;padding:25px}
+.message{font-size:13px;line-height:1.8;padding:14px 16px}
+.chat-head{height:72px}
+.chat-compose{height:62px}
+@media(max-width:900px){.ai-inner{grid-template-columns:minmax(210px,.68fr) minmax(0,1.32fr);gap:24px;padding:68px 28px;min-height:660px}.chat-messages{height:390px}}
+@media(max-width:660px){.ai-inner{grid-template-columns:1fr;gap:24px;padding:64px 16px;min-height:0}.chat-messages{height:360px;padding:20px}.chat-head{height:66px}.message{font-size:13px;line-height:1.75}.chat-compose{height:58px;margin:0 10px}.chat-foot{font-size:10px}}
