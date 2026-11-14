@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maxwell-kwakye-learning.vercel.app/sitemap.xml
+Sitemap: https://kwakye-tech.vercel.app/sitemap.xml
