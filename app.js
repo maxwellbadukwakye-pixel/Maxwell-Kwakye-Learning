@@ -27,10 +27,20 @@ function addMessage(text,kind='bot-message'){
   const node=document.createElement('div');node.className='message '+kind;node.textContent=text;messages.append(node);messages.scrollTop=messages.scrollHeight;return node;
 }
 function setStatus(text){if(status)status.textContent=text}
-function preferredVoice(){
-  const voices=window.speechSynthesis?.getVoices?.()||[];
+function deviceVoices(){
+  const synth=window.speechSynthesis,voices=synth.getVoices();
+  if(voices.length)return Promise.resolve(voices);
+  return new Promise(resolve=>{
+    let finished=false;
+    const finish=()=>{if(finished)return;const loaded=synth.getVoices();if(loaded.length){finished=true;clearTimeout(timer);synth.removeEventListener?.('voiceschanged',finish);resolve(loaded)}};
+    const timer=setTimeout(()=>{if(finished)return;finished=true;synth.removeEventListener?.('voiceschanged',finish);resolve(synth.getVoices())},1800);
+    synth.addEventListener?.('voiceschanged',finish);
+  });
+}
+const maleVoiceName=/(?:\bmale\b|\bman\b|\bdavid\b|\bdaniel\b|\bmark\b|\bguy\b|\bryan\b|\bjames\b|\bgeorge\b|\bmatthew\b|\baaron\b|\bfred\b|\bbrian\b|\bthomas\b|\boliver\b|\bliam\b|\bandrew\b|\beric\b|\broger\b|\bchristopher\b|\bsteffan\b|\bpaul\b|\bpeter\b|\barthur\b)/i;
+function preferredVoice(voices){
   const english=voices.filter(v=>/^en(-|_|$)/i.test(v.lang));
-  return english.find(v=>/male|david|george|guy|mark|daniel|alex|ryan|james|matthew|aaron|fred/i.test(v.name))||english.find(v=>/google us english|english/i.test(v.name))||english[0]||voices[0]||null;
+  return english.find(v=>maleVoiceName.test(v.name))||english.find(v=>!/\bfemale\b/i.test(v.name))||english[0]||voices[0]||null;
 }
 function speechFriendlyText(text){
   return text
@@ -45,12 +55,17 @@ function speechFriendlyText(text){
     .replace(/\s{2,}/g,' ')
     .trim();
 }
-function speak(text){
+async function speak(text){
   if(!voiceReplies||!('speechSynthesis'in window))return;
-  window.speechSynthesis.cancel();
-  const utterance=new SpeechSynthesisUtterance(speechFriendlyText(text));utterance.lang='en-US';utterance.rate=.96;utterance.pitch=.86;
-  const voice=preferredVoice();if(voice)utterance.voice=voice;
-  window.speechSynthesis.speak(utterance);
+  const synth=window.speechSynthesis;
+  synth.cancel();
+  const voice=preferredVoice(await deviceVoices());
+  const utterance=new SpeechSynthesisUtterance(speechFriendlyText(text));utterance.lang='en-US';utterance.rate=.95;utterance.pitch=.9;
+  if(voice)utterance.voice=voice;
+  const explicitMale=!!voice&&maleVoiceName.test(voice.name);
+  utterance.pitch=explicitMale?0.9:0.76;
+  setStatus(explicitMale?'Speaking with a male English voice.':"Your phone doesn't list a male English voice, so I'm using its closest available voice. You can download or choose a male voice in your phone's text-to-speech settings.");
+  synth.speak(utterance);
 }
 async function sendChat(text){
   const question=text.trim();if(!question)return;
@@ -85,4 +100,4 @@ if(mic){
     mic.addEventListener('click',()=>{if(recording)recognition.stop();else{input.value='';try{recognition.start()}catch{setStatus('Please wait a moment, then tap the microphone again.')}}});
   }
 }
-if('speechSynthesis'in window){window.speechSynthesis.getVoices();window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices()}
+if('speechSynthesis'in window)window.speechSynthesis.getVoices();
